@@ -1,0 +1,1968 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <!-- <script type="text/javascript" src="/path/to/bootstrap-datetimepicker.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <title>十分位</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+    min-width: 1900px;
+}
+i:hover{
+    color: rgb(155, 155, 155);
+    transition: .3s;
+}
+.table{
+    border:solid 3px #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 5px 10px;
+    font-size: 12px;
+}
+.th{
+    cursor: pointer;
+}
+.th,.td{
+    display: grid;
+    grid-template-columns: repeat(18,1fr);
+}
+.th-box{
+    border:solid 1px #eee;
+    text-align: center;
+    padding: 5px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color:rgb(218, 218, 218);
+}
+.th-box p{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.td-box-head{
+    background-color:rgb(218, 218, 218);
+    word-break: break-all;
+    cursor: pointer;
+    justify-content: center !important;
+}
+.td-box{
+    border:solid 1px #eee;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    height: 45px;
+}
+.td-box-check{
+    background-color: rgb(253, 255, 219);
+}
+.td-box input{ 
+    position: absolute;
+    display:none; 
+}
+label{
+    margin-bottom: 0px;
+}
+.td-box-can{
+    cursor: pointer;
+}
+.td-box-can:hover{
+    transition: .3s;
+    background-color: rgb(255, 234, 149);
+}
+.td-box-cant{
+    background-color: rgb(226, 230, 235) !important;
+}
+/*測試儲存*/
+.bottom{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.btn{
+    width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    border:solid 1px #333;
+    margin: 10px;
+    margin-left:20px ;
+    text-align: center;
+    cursor: pointer;
+}
+/*top*/
+.theTop{
+    border-bottom: solid 3px #eee;
+}
+.theTop .drop-box{
+    margin-bottom: 10px;
+}
+.top{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.top-box-center{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.top-box-center .top-box .drop-box{
+    margin: 10px 20px !important;
+}
+.top-box-center .top-box {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+/*drop*/
+.dropdown{
+    position: relative;
+}
+i{
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    color: rgb(126, 126, 126);
+}
+.fa-sort-down{
+    top: 3px;
+}
+.drop-box{
+    margin: 20px 20px;
+    display: flex;
+}
+.top-box-center .drop-box{
+    margin: 10px 20px !important;
+}
+.drop-title{
+    width: 130px;
+}
+.dropdown-content{
+    width: 100%;
+    max-height: 90px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    background-color: #fff;
+    width: 192px;
+    border: solid 1px rgb(223, 223, 223);
+    border-top: none;
+    z-index: 99;
+}
+.dropdown-content-small{
+    width: 80px !important;
+}
+.drop-content-flex-box{
+    display: flex;
+    flex-wrap: wrap;
+}
+.dropdown-item{
+    cursor: pointer;
+    width: 192px;
+    padding: 5px;
+}
+.dropdown-item:hover{
+    background-color: rgb(228, 228, 228);
+}
+.dropdown-input{
+    width: 192px;
+    position: relative;
+    cursor: pointer;
+}
+.dropdown-input-text{
+    cursor: initial;
+}
+/*time*/
+.form-group{
+    display: flex;
+}
+.datepicker{
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+th,td{
+    padding: 3px;
+}
+.form-inline{
+    position: relative;
+}
+.fa-eraser{
+    position: absolute;
+    left: 530px;
+    top: 7px;
+    cursor: pointer;
+}
+.form-control{
+    width: 170px;
+}
+/*input*/
+.i-pen{
+    top:4px;
+    right: -30px;
+    cursor: pointer;
+}
+.input-box{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px 20px;
+}
+.input-box-tag{
+    padding:0 40px 20px;
+    align-items: center;
+}
+.input-box-tag i{
+    top: 5px;
+}
+.input-box input{
+    width: 80%;
+}
+.input-box-tag input{
+    width: calc(100% - 120px);
+    height: 30px;
+}
+.i-search{
+    position: absolute;
+    right: 25px;
+    top: 5px;
+    width: 30px;
+    height: 30px;
+}
+.input-box-tag .i-search{
+    right: 45px;
+    top: 8px;
+}
+.pop{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+.pop-wh{
+    width: 500px;
+    height: 500px;
+    background-color: #fff;
+    position: relative;
+    box-shadow: 0 0 5px rgba(51, 51, 51, 0.31);
+}
+.pop-wh h4{
+    position: absolute;
+    right: 10px;
+    top: -5px;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.item-big-box{
+    height: 300px;
+}
+.item-box{
+    width: 90%;
+    margin: 0px auto;
+    margin-bottom: 10px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: auto;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.tag-label p{
+    border: none !important;
+}
+.item{
+    width: 97%;
+    display: flex;
+    align-items: center;
+    border: solid 1px rgb(225, 225, 225);
+    cursor: pointer;
+}
+.tag-item{
+    border: none;
+    width: 90%;
+    flex-wrap: wrap;
+}
+.tag-title{
+    width: 100%;
+    padding: 5px 20px;
+    background-color: rgb(255, 201, 201);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+.tag-title p,.item-box p{
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;  
+    white-space: nowrap;
+}
+.tag-title:hover{
+    background-color: rgb(255, 162, 162);
+}
+.tag-big-group{
+    width: 99%;
+    margin: 0px auto 10px;
+}
+.tag-group-box{
+    border:solid 1px #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    
+}
+.tag-group{
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 1px #eee;
+    transition: .3s;
+}
+.tag-group:hover{
+    background-color: #eee;
+}
+.border-n{
+    border: none !important;
+}
+.tag-small-group{
+    position: relative;
+}
+.tag-small-group p{
+    font-weight: bold;
+    font-size: 15;
+}
+.check-all-group{
+    position: absolute;
+    right: 0;
+    bottom: -10px;
+    display: flex;
+    align-items: center;
+    width: 80px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: solid 1px #eeeeee;
+    justify-content: space-around;
+    background: white;
+    cursor: pointer;
+    justify-content: start;
+    transition: .3s;
+}
+.check-all-group:hover{
+    background-color: #eee;
+}
+.check-all-group-del{
+    width: 100px;
+}
+.check-box-css{
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    border: solid 1px #333;
+    color: #fff;
+}
+.check-box-css div{
+    opacity: 0;
+}
+.m-5{
+    margin-left: 5px;
+}
+.check-box-css-checked{
+    background-color: rgb(80, 76, 136);
+}
+.check-box-css-checked div{
+    opacity: 1;
+}
+.check-box-css div{
+    font-size: 8px;
+    margin-top: -2px;
+    margin-left: 1px;
+}
+.item p{
+    padding: 5px 10px;
+    border-left: solid 1px #ddd;
+    margin: 0;
+    width: 300px;
+    cursor: pointer;
+}
+
+.pop-btn-box{
+    display: flex;
+    justify-content: center;
+}
+.btn{
+    width: 180px;
+    padding: 15px;
+    border: none;
+    background-color: #eee;
+    border-radius: 30px;
+}
+.pop-title{
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 20px;
+    font-size: 18px;
+}
+.red{
+    background-color: rgb(255, 70, 70);
+    color: #fff;
+}
+/**/
+/*tag-for-new*/
+.item-label input {
+    display: none;
+}
+.show-input {
+    margin: 0 10px !important;
+}
+.flex{
+    display: flex;
+}
+.del-samll{
+    font-weight: bold;
+    color: rgb(255, 79, 79);
+}
+.text-red{
+    color: rgb(255, 79, 79);
+}
+.pop-wh-confirm-back{
+    background-color: rgba(51, 51, 51, 0.618);
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+}
+.pop-wh-confirm{
+    width: 400px;
+    height: 200px;
+    padding: 20px;
+    background: white;
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.btn-small{
+    width: 120px;
+    height: 40px;
+    padding: 10px;
+}
+.want-to-del {
+    display: flex;
+    position: absolute;
+    bottom: -30px;
+    width: 220px;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px ;
+}
+.want-to-del label{
+    cursor: pointer;
+}
+.absolute-title{
+    position: absolute;
+    width: 390px;
+    top: 110px;
+    z-index: 9;
+}
+.absolute-pop{
+    position: absolute;
+    width: 388px;
+    background: #fff;
+    top: 150px;
+}
+.margin-top-30{
+    margin-top: 30px;
+}
+.margin-top-40{
+    margin-top: 40px;
+}
+/*nav*/
+.nav-box{
+    display: flex;
+    justify-content: flex-start; 
+    padding: 0 20px;
+    z-index: -2;
+    height: 40px;
+    position: absolute;
+    z-index: -10;
+    top: -35px;
+}
+.nav{
+    border:solid 1px #555;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: .3s;
+    background-color: #fff;
+}
+.nav:hover{
+    margin-top: -6px;
+    padding-top: 13px;
+}
+.click-nav{
+    margin-top: -6px !important;
+    padding-top: 13px !important;
+    background-color: rgb(255, 171, 171); 
+    color: #fff;
+}
+.total-people{
+    padding: 0 25px;
+}
+.total-people span{
+    padding-left: 20px;
+}
+.clean-all{
+    margin: 0 10px 10px;
+    text-align: right;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.pop-wh-height{
+    height: 520px;
+}
+.form-control{
+    background-color: #fff !important;
+}
+
+    </style>
+</head>
+<body >
+    <div id="activityitemapp">
+        <div class="theTop">
+            <dropdownbox :data="dropDownTest.arr" :title="theTopTitle.val" :changehandler="changeHandler"></dropdownbox>
+        </div>
+        <div class="top">
+            <div class="top-box">
+                <dropdownbox :data="dropDownTestStore.arr" :title="title.arr[0].name" :changehandler="changeHandler"></dropdownbox>
+                <inputbox :data="floorData.arr" :title="title.arr[4].name" @change="inputSave"></inputbox>
+                <timebox :title="title.arr[1].name" :ids="timeId.arr[0]"></timebox>
+                <timebox :title="title.arr[2].name" :ids="timeId.arr[1]"></timebox>
+                
+            </div>
+            <div class="top-box top-box-center">
+                <div class="top-box">
+                    <inputbox :data="workData.arr" :title="title.arr[7].name" :input-save="inputSave" :changehandler="changeHandler"></inputbox>
+                    <dropdownbox :data="dropDownTestItem.arr" :title="title.arr[3].name" :changehandler="changeHandler"></dropdownbox>
+                    <inputbox :data="havePushData.arr" :title="title.arr[5].name" :input-save="inputSave" :changehandler="changeHandler"></inputbox>
+                    <inputbox :data="blackData.arr" :title="title.arr[8].name" :input-save="inputSave" :changehandler="changeHandler"></inputbox>
+                </div>
+            </div>
+            <div class="top-box">
+                <inputbox :data="tagData.arr" :title="title.arr[6].name" :input-save="inputSave" :changehandler="changeHandler"></inputbox>
+            </div>
+        </div>
+        <div class="table">
+            <div class="th"><div class="th-box" v-for="(v,k) in tableTitle.arr" :key="k" @click="clickTitleItem(k)">{{v.name}}</div></div>
+            <div class="td" v-for="(v,k) in table.arr" :key="k">
+                <div class="td-box td-box-head" @click="clickLeftItem(k)">{{v.first}}</div>
+                <label :for="vv.id" :class="['td-box td-box-label',vv.check && 'td-box-check',v.item.can &&'td-box-can',(v.item.can!==undefined && ((!v.item.can || !vv.can ) && k!==16 && k!==17 ) ) &&'td-box-cant']" v-for="(vv,kk) in v.item.arr" :key="kk">
+                    <input type="checkbox" :id="vv.id" v-model="vv.check" :disabled="v.item.can==false">
+                    {{vv.name}}
+                </label>
+                <label :for="v.HorizontalTotal.id" :class="['td-box td-box-label',v.HorizontalTotal.check && 'td-box-check',v.HorizontalTotal.can &&'td-box-can',(v.HorizontalTotal.can!==undefined &&!v.HorizontalTotal.can) &&'td-box-cant']">
+                    <input type="checkbox" :id="v.HorizontalTotal.id" v-model="v.HorizontalTotal.check" :disabled="v.HorizontalTotal.id===''||!v.HorizontalTotal.can">
+                    {{v.HorizontalTotal.name}}
+                </label>
+                <div :class="['td-box',(v.LostRate!==''&&k!==table.length-1&&k!==table.length-2)&&'td-box-cant']">{{v.AmountTotal_B}}</div>
+                <div :class="['td-box',(v.LostRate!==''&&k!==table.length-1&&k!==table.length-2)&&'td-box-cant']">{{v.AmountTotal_A}}</div>
+                <label :for="v.Lost.id" :class="['td-box td-box-label',v.Lost.check && 'td-box-check',v.Lost.can &&'td-box-can']">
+                    <input type="checkbox" :id="v.Lost.id" v-model="v.Lost.check" :disabled="v.Lost.id===''">
+                    {{v.Lost.name}}
+                </label>
+                <div :class="['td-box',(v.LostRate!==''&&k!==table.length-1&&k!==table.length-2)&&'td-box-cant']">{{v.LostRate}}</div>
+                <label :for="v.PeopleTotal_B.id" :class="['td-box td-box-label',v.PeopleTotal_B.check && 'td-box-check',v.PeopleTotal_B.can &&'td-box-can']">
+                    <input type="checkbox" :id="v.PeopleTotal_B.id" v-model="v.PeopleTotal_B.check" :disabled="v.PeopleTotal_B.id===''">
+                    {{v.PeopleTotal_B.name}}
+                </label>
+                <label :for="v.PurchaseTotal_B.id" :class="['td-box td-box-label',v.PurchaseTotal_B.check && 'td-box-check',(v.PurchaseTotal_B.can!==undefined && !v.PurchaseTotal_B.can) &&'td-box-cant' ]">
+                    <input type="checkbox" :id="v.PurchaseTotal_B.id" v-model="v.PurchaseTotal_B.check" :disabled="v.PurchaseTotal_B.id===''">
+                    {{v.PurchaseTotal_B.name}}
+                </label>
+            </div>
+        </div>
+        <div class="bottom">
+            <p>總人數: 12312312</p>
+            <div class="btn" @click="save()">測試儲存</div>
+        </div>
+    </div>
+
+    <!--inputbox---->
+    <template id="inputbox">
+        <div class="drop-box">
+            <div class="drop-title">{{props.title}}:</div>
+            <!-- input -->
+            <div class="dropdown" @click="showOptions()">
+                <input
+                    class="dropdown-input-text"
+                    v-model="text.val"
+                    placeholder="請選擇"
+                    readonly
+                />
+                <i class="fas fa-pen i-pen" ></i>
+            </div>
+            <div class="pop" v-if="optionsShown.val">
+                <!-- 跳出視窗選擇是否刪除 -->
+                <div class="pop-wh-confirm-back" v-if="openConfirm.val">
+                    <div class="pop-wh-confirm">
+                        <div class="text">                                                
+                            {{confrimText.obj.left}}
+                            <span class="text-red">{{confrimText.obj.tagName}}</span>
+                            <span v-if="confrimText.obj.spec">{{confrimText.obj.right}}<span class="text-red">『所有』</span>{{confrimText.obj.spec}}</span>
+                            <span v-else>{{confrimText.obj.right}}</span>
+                        </div>
+                        <div class="pop-btn-box">
+                            <div class="btn btn-small red" @click="checkDel(true)">確認</div>
+                            <div class="btn btn-small" @click="checkDel(false)">取消</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 跳出視窗選擇內容 -->
+                <div :class="['pop-wh',handleTag.val && 'pop-wh-height']">
+                    <div class="nav-box" v-if="handleTag.val">
+                        <div v-for="(val,k) in navTitle.arr" :key="k"
+                        :class="['nav',navNumber.val===val.val&&'click-nav']" @click="clickNav(val)">{{val.name}}</div>
+                    </div>
+                    <h4 @click="exit()">X</h4>
+                    <div class="pop-title">選擇{{props.title}}</div>
+
+                    <div :class="['input-box',handleTag.val && 'input-box-tag']">
+                        <div v-if="!handleTag.val">搜尋：</div>
+                        <!-- 標籤的 -->
+                        <dropdownbox v-else :data="dropDownTest.arr" :changehandler="drop"></dropdownbox>
+                        <input type="text" v-model="keyWord.val" v-on:keyup.enter="searchIt(props.title)"/>
+                        <i class="fas fa-search i-search" @click="searchIt(props.title)"></i>
+                    </div>
+                    <!-- 其他的 -->
+                    <div class="item-big-box" v-if="!handleTag.val">
+                        <div class="item-box">
+                            <div class="item" v-for="(item,key) in getData.arr" :key="key" v-show="item.show">
+                                <input class="show-input" type="checkbox" v-model="item.check">
+                                <label class="item-label"><p>{{item.item}}</p>
+                                    <input type="checkbox" v-model="item.check">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 標籤的 -->
+                    <div class="item-big-box" v-if="handleTag.val && navNumber.val==0">
+                        <div class="item-box" ref="itemTag">
+                            <div class="item tag-item" v-for="(val,key) in anothergetData.arr" :key="key">
+                                
+                                <div :class="['tag-title',
+                                (nowScrollTop.val > 0 && nowScrollTop.val > val.height && nowScrollTop.val < val.nextHeight) && 'absolute-title']" @click.prevent="clickAll(key,true)" v-show="val.show">
+                                    <div :class="['check-box-css',val.check && 'check-box-css-checked c-w']"><div>✓</div></div>
+                                    <label class="item-label tag-label"><p>{{val.name}}</p></label>
+                                </div>
+
+                                <div :class="['tag-big-group',
+                                (nowScrollTop.val > 0 && nowScrollTop.val > val.height && nowScrollTop.val < v.nextHeight ) && 'margin-top-40']"  
+                                v-for="( v , k) in val.small" :key="k" v-show="v.show && val.show">
+                                    <div :class="['tag-small-group',
+                                    (nowScrollTop.val > 0 && nowScrollTop.val > v.height && nowScrollTop.val < v.nextHeight) && 'absolute-pop']">
+                                        <p class="border-n">{{v.name}}</p>
+                                        <label :class="['check-all-group']" @click="clickGroup(key,k,true)">
+                                            <div>全選</div>
+                                            <div :class="['check-box-css m-5',v.check && 'check-box-css-checked']"><div>✓</div></div>
+                                        </label>
+                                    </div>
+                                    <!-- 所有的tag -->
+                                    <div :class="['tag-group-box',
+                                    (nowScrollTop.val > 0 && nowScrollTop.val > v.height && nowScrollTop.val < v.nextHeight) && 'margin-top-30']" >
+                                        <div @click.prevent="smallTagClick(key,k,kk,true)" :class="['tag-group',kk==v.arr.length-1 &&'border-n']"
+                                         v-for="( vv , kk) in v.arr" :key="kk" v-show="vv.show && v.show && val.show">
+                                            <div :class="['check-box-css',vv.check && 'check-box-css-checked']"><div>✓</div></div>
+                                            <label class="item-label tag-label"><p>{{vv.item}}</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 已經選擇的標籤的 -->
+                    <div class="item-big-box" v-if="handleTag.val && navNumber.val==1">
+                        <div class="item-box" ref="itemTag">
+                            <div class="item tag-item" v-for="(val,key) in anothergetData.arr" :key="key">
+                                
+                                <div :class="['tag-title',
+                                (nowScrollTop.val > 0 && nowScrollTop.val > val.height && nowScrollTop.val < val.nextHeight) && 'absolute-title']"
+                                @click.prevent="clickAll(key,false)" 
+                                v-show="val.show && (val.check || val.small.some(x=>x.arr.some(xx=>xx.check && xx.show)))">
+                                    <div class="del-samll">X</div>
+                                    <label class="item-label tag-label"><p>{{val.name}}</p></label>
+                                </div>
+                                <!-- 類別 -->
+                                <div :class="['tag-big-group',
+                                (nowScrollTop.val > 0 && nowScrollTop.val > val.height && nowScrollTop.val < v.nextHeight) && 'margin-top-40']" 
+                                    v-for="( v , k) in val.small" :key="k" 
+                                    v-show="(v.show && val.show ) && (v.check || v.arr.some(x => x.check && x.show))">
+                                    <div :class="['tag-small-group',
+                                    (nowScrollTop.val > 0 && nowScrollTop.val > v.height && nowScrollTop.val < v.nextHeight) && 'absolute-pop']">
+                                        <p class="border-n">{{v.name}}</p>
+                                        <label class="check-all-group check-all-group-del" @click="clickGroup(key,k,false)">
+                                            <div>全選刪除</div>
+                                            <div class="del-samll m-5">X</div>
+                                        </label>
+                                    </div>
+                                    <!-- 所有的tag -->
+                                    <div :class="['tag-group-box',
+                                    (nowScrollTop.val > 0 && nowScrollTop.val > v.height && nowScrollTop.val < v.nextHeight) && 'margin-top-30']"  >
+
+                                        <div @click.prevent="smallTagClick(key,k,kk,false)" :class="['tag-group',kk==v.arr.length-1 &&'border-n']"
+                                            v-for="( vv , kk) in v.arr" :key="kk" v-show="vv.show && v.show && val.show && vv.check">
+                                            <div class="del-samll">X</div>
+                                            <label class="item-label tag-label"><p>{{vv.item}}</p></label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pop-btn-box">
+                        <div class="btn red" @click="save()">確定</div>
+                        <div class="btn" @click="back()">返回</div>
+                    </div>
+                    <div class="clean-all"  v-if="handleTag.val" @click="cleanTableHandle()">
+                        已選擇：{{tagNum.val}}，清空所有選擇
+                    </div>
+                    <!-- 使用者選擇是否要檢查刪除 -->
+                    <div class="want-to-del" @click="dontWantToCheckDelHandle" v-if="handleTag.val">
+                        <div :class="['check-box-css',!dontWantToCheckDel.val && 'check-box-css-checked c-w']"><div>✓</div></div>
+                        <label class="item-label tag-label m-5 text-red">刪除標籤時是否要確認</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!--dropdown---->
+    <template id="dropdownbox">
+        <div :class="['flex', props.title &&'drop-box']">
+            <div class="drop-title" v-if="props.title">{{props.title}}:</div>
+            <!-- 下拉選單 -->
+            <div class="dropdown">
+                <input
+                    :class="['dropdown-input',!props.title && 'dropdown-content-small']"
+                    v-model="text.val"
+                    @focus="showOptions()"
+                    @blur="exit()"
+                    placeholder="請選擇"
+                    readonly
+                />
+                <i class="fas fa-sort-down"></i>
+                <div :class="['dropdown-content',!props.title && 'dropdown-content-small']" v-show="optionsShown.val">
+                    <div class="drop-content-flex-box">
+                        <a
+                        v-for="(value,key) in props.data"
+                        :key="key"
+                        :class="['dropdown-item',value.act && 'dropdown-item-act']"
+                        @mousedown="drop(value)"
+                        >{{value.text}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!--time---->
+    <template type="text/x-template" id="timebox">
+        <div class="form-inline">
+            <div class="drop-box" v-if="props.ids">
+                <div class="drop-title">{{props.title}}:</div>
+                <input :id="props.ids.nameS" name="startDate" type="text" v-model="startTime.val" class="startDate form-control" readonly/>~
+                <input :id="props.ids.nameE" name="endDate" type="text" v-model="endTime.val" class="endDate form-control" readonly/>
+            </div>
+            <i class="fas fa-eraser" @click="clean()"></i>
+        </div>
+    </template>
+
+    <!-- vue3.0 -->
+    <script src="https://unpkg.com/vue@next"></script>
+    
+    <script>
+        const { ref,reactive,readonly,computed,watch,onMounted,nextTick,onBeforeUpdate,created }= Vue;//掛鉤用（可接受所以類別），但物件或陣列內部無法監聽
+        const allData={RowList:[{Level:1,Data:[{ID:31359,Value:32270},{ID:65615,Value:73377},{ID:46961,Value:31100},{ID:9179,Value:62170},{ID:54013,Value:97585},{ID:23390,Value:16037},{ID:85954,Value:21018},{ID:862,Value:35883},{ID:64797,Value:91299},{ID:97516,Value:48591}],StatisticData:{HorizontalTotal:{ID:31688,Value:85534},AmountTotal_B:{ID:59315,Value:35663},AmountTotal_A:{ID:46469,Value:57332},Lost:{ID:14977,Value:46217},LostRate:{ID:37999,Value:94148},PeopleTotal_B:{ID:55001,Value:13351},PurchaseTotal_B:{ID:37560,Value:28409}}},{Level:2,Data:[{ID:36516,Value:98020},{ID:713,Value:43871},{ID:59582,Value:92714},{ID:13447,Value:38062},{ID:7990,Value:92889},{ID:50234,Value:20345},{ID:31623,Value:96586},{ID:11422,Value:87622},{ID:78815,Value:13580},{ID:43031,Value:14277}],StatisticData:{HorizontalTotal:{ID:69599,Value:45823},AmountTotal_B:{ID:72953,Value:29952},AmountTotal_A:{ID:26907,Value:89627},Lost:{ID:16122,Value:62961},LostRate:{ID:24171,Value:59863},PeopleTotal_B:{ID:42584,Value:10038},PurchaseTotal_B:{ID:78475,Value:57545}}},{Level:3,Data:[{ID:84500,Value:2841},{ID:35170,Value:20925},{ID:31716,Value:4801},{ID:35143,Value:93624},{ID:77544,Value:66425},{ID:85428,Value:26124},{ID:25709,Value:18390},{ID:34795,Value:50375},{ID:15333,Value:41421},{ID:70319,Value:23283}],StatisticData:{HorizontalTotal:{ID:58808,Value:90691},AmountTotal_B:{ID:25066,Value:70760},AmountTotal_A:{ID:16964,Value:69953},Lost:{ID:76592,Value:50485},LostRate:{ID:13891,Value:48125},PeopleTotal_B:{ID:50305,Value:40195},PurchaseTotal_B:{ID:41868,Value:74077}}},{Level:4,Data:[{ID:12085,Value:8580},{ID:52452,Value:57889},{ID:81862,Value:38229},{ID:79132,Value:75973},{ID:68278,Value:6528},{ID:44523,Value:783},{ID:63918,Value:97731},{ID:28166,Value:73794},{ID:44530,Value:1163},{ID:39718,Value:55192}],StatisticData:{HorizontalTotal:{ID:98735,Value:93808},AmountTotal_B:{ID:77773,Value:64409},AmountTotal_A:{ID:3960,Value:61762},Lost:{ID:28208,Value:84656},LostRate:{ID:79733,Value:29418},PeopleTotal_B:{ID:16120,Value:45232},PurchaseTotal_B:{ID:84254,Value:51630}}},{Level:5,Data:[{ID:6305,Value:26214},{ID:97922,Value:57442},{ID:59558,Value:32089},{ID:44149,Value:82834},{ID:22413,Value:18538},{ID:26236,Value:16181},{ID:6034,Value:78860},{ID:22319,Value:40095},{ID:3594,Value:49142},{ID:477,Value:86675}],StatisticData:{HorizontalTotal:{ID:75341,Value:18276},AmountTotal_B:{ID:30806,Value:88041},AmountTotal_A:{ID:53928,Value:20099},Lost:{ID:10021,Value:94474},LostRate:{ID:96239,Value:38859},PeopleTotal_B:{ID:90406,Value:99289},PurchaseTotal_B:{ID:16527,Value:12287}}},{Level:6,Data:[{ID:91425,Value:1951},{ID:75871,Value:87087},{ID:41604,Value:7628},{ID:11042,Value:15900},{ID:71394,Value:59234},{ID:38172,Value:87778},{ID:55727,Value:49347},{ID:62337,Value:39637},{ID:25823,Value:66977},{ID:44754,Value:97578}],StatisticData:{HorizontalTotal:{ID:76288,Value:88028},AmountTotal_B:{ID:95407,Value:9880},AmountTotal_A:{ID:3513,Value:39458},Lost:{ID:22068,Value:49673},LostRate:{ID:86594,Value:83552},PeopleTotal_B:{ID:28130,Value:26946},PurchaseTotal_B:{ID:99652,Value:93745}}},{Level:7,Data:[{ID:87433,Value:20367},{ID:64223,Value:16506},{ID:7537,Value:92848},{ID:75632,Value:59440},{ID:46880,Value:71570},{ID:49869,Value:66149},{ID:64370,Value:60672},{ID:32137,Value:56601},{ID:13035,Value:23429},{ID:54535,Value:18948}],StatisticData:{HorizontalTotal:{ID:35998,Value:3397},AmountTotal_B:{ID:6543,Value:65990},AmountTotal_A:{ID:83573,Value:2145},Lost:{ID:85558,Value:61367},LostRate:{ID:29304,Value:87841},PeopleTotal_B:{ID:31103,Value:11226},PurchaseTotal_B:{ID:88124,Value:61981}}},{Level:8,Data:[{ID:61912,Value:41969},{ID:75413,Value:9317},{ID:59439,Value:51904},{ID:21945,Value:16847},{ID:41147,Value:23836},{ID:60009,Value:37363},{ID:75086,Value:61395},{ID:17535,Value:29993},{ID:70516,Value:4701},{ID:72409,Value:80704}],StatisticData:{HorizontalTotal:{ID:57747,Value:84036},AmountTotal_B:{ID:13824,Value:98231},AmountTotal_A:{ID:32931,Value:5392},Lost:{ID:7289,Value:14264},LostRate:{ID:30135,Value:59037},PeopleTotal_B:{ID:40466,Value:38643},PurchaseTotal_B:{ID:78023,Value:2389}}},{Level:9,Data:[{ID:98758,Value:90167},{ID:81187,Value:3718},{ID:63988,Value:2630},{ID:97001,Value:19150},{ID:62248,Value:82706},{ID:5981,Value:46210},{ID:27057,Value:24163},{ID:43831,Value:99310},{ID:17325,Value:26402},{ID:38815,Value:7419}],StatisticData:{HorizontalTotal:{ID:4233,Value:77875},AmountTotal_B:{ID:28145,Value:77180},AmountTotal_A:{ID:76384,Value:54047},Lost:{ID:44614,Value:7680},LostRate:{ID:86711,Value:82109},PeopleTotal_B:{ID:83369,Value:21366},PurchaseTotal_B:{ID:59338,Value:72697}}},{Level:10,Data:[{ID:62635,Value:27367},{ID:48804,Value:66797},{ID:40711,Value:69778},{ID:83702,Value:38597},{ID:21787,Value:31116},{ID:92250,Value:86720},{ID:78333,Value:83125},{ID:70431,Value:30823},{ID:41712,Value:14064},{ID:99826,Value:70604}],StatisticData:{HorizontalTotal:{ID:98155,Value:20882},AmountTotal_B:{ID:62022,Value:4006},AmountTotal_A:{ID:27332,Value:9941},Lost:{ID:58014,Value:89320},LostRate:{ID:32438,Value:80138},PeopleTotal_B:{ID:99336,Value:84614},PurchaseTotal_B:{ID:86870,Value:54359}}}],Statistic_left:[{Name:"縱計",Data:[{ID:61526,Value:16464},{ID:50506,Value:50526},{ID:85689,Value:69035},{ID:23715,Value:65634},{ID:56088,Value:97027},{ID:84929,Value:89663},{ID:75712,Value:61488},{ID:37248,Value:55887},{ID:40397,Value:69304},{ID:21538,Value:88733}],HorizontalTotal:{ID:74541,Value:41752}},{Name:"109年合計(金額)(A)",Data:[{ID:65343,Value:44797},{ID:39464,Value:30769},{ID:11764,Value:94381},{ID:6159,Value:41648},{ID:31779,Value:7635},{ID:99848,Value:23974},{ID:21598,Value:53967},{ID:80316,Value:91184},{ID:28373,Value:30790},{ID:46888,Value:32520}],HorizontalTotal:{ID:64793,Value:64994}},{Name:"108年合計(金額)",Data:[{ID:19076,Value:37668},{ID:34228,Value:96525},{ID:52072,Value:76549},{ID:39741,Value:30031},{ID:63075,Value:98136},{ID:79817,Value:19774},{ID:51120,Value:5708},{ID:11061,Value:54919},{ID:57271,Value:29333},{ID:59475,Value:14440}],HorizontalTotal:{ID:65247,Value:77293}},{Name:"新顧客人數",Data:[{ID:89813,Value:51738},{ID:39889,Value:83279},{ID:75569,Value:49211},{ID:40931,Value:90746},{ID:41845,Value:42020},{ID:76958,Value:349},{ID:25721,Value:1796},{ID:96540,Value:15237},{ID:42309,Value:29608},{ID:1907,Value:1748}],HorizontalTotal:{ID:44559,Value:1712}},{Name:"109年合計(人數)(A)",Data:[{ID:44155,Value:1824},{ID:2846,Value:74608},{ID:80122,Value:73452},{ID:73517,Value:17554},{ID:73044,Value:50353},{ID:99745,Value:41781},{ID:47854,Value:82489},{ID:56635,Value:68791},{ID:980,Value:90528},{ID:89098,Value:72328}],HorizontalTotal:{ID:56290,Value:37796}},{Name:"109年合最高購買額(A)",Data:[{ID:42815,Value:50771},{ID:79986,Value:9265},{ID:58378,Value:42034},{ID:87023,Value:29866},{ID:12532,Value:63498},{ID:32734,Value:88100},{ID:7582,Value:38065},{ID:80433,Value:961},{ID:69088,Value:67477},{ID:17228,Value:24290}],HorizontalTotal:{ID:68975,Value:26604}}],Statistic_right:{MaintainAmountRate:{ID:602,Value:83938},MaintainRate:{ID:53940,Value:14050},NewCustomerRate:{ID:28628,Value:11377},NewCustomerPurchase:{ID:58600,Value:73516},LostAmount:{ID:12648,Value:72229},UnitPrice_A:{ID:45421,Value:6358},UnitPrice_B:{ID:59007,Value:52074}}}
+        //基本全域，先定義最外層
+        const App=Vue.createApp({
+            //setup是vue3.0改動最大的部分，return是必要的
+            setup(){
+                //用在dom上的，需要return
+                const title=reactive({arr:[{name:'管別'},{name:'主期間'},{name:'對比期間'},{name:'專櫃'},{name:'樓層'},{name:'已發送名單'},{name:'標籤'},{name:'業種'},{name:'拒絕行銷種類'}]})
+                const tagData=reactive({arr:[
+                    {name:'類別ＡＡＡＡＡＡ',small:[
+                        {item:'感冒的一群人',id:0,idName:'群組Ａ'},
+                        {item:'鼻子嚴重過敏快掉下來變佛地魔的一群人',id:0,idName:'群組Ａ'},
+                        {item:'1127',id:0,idName:'群組Ａ'},
+                        {item:'1128',id:0,idName:'群組Ａ'},
+                        {item:'1129',id:0,idName:'群組Ａ'},
+                        {item:'1130',id:0,idName:'群組Ａ'},
+                        {item:'113666',id:0,idName:'群組Ａ'},
+                        {item:'1129',id:0,idName:'群組Ａ'},
+                        {item:'1130',id:0,idName:'群組Ａ'},
+                        {item:'113666',id:0,idName:'群組Ａ'},
+                        {item:'1129',id:0,idName:'群組Ａ'},
+                        {item:'1130',id:0,idName:'群組Ａ'},
+                        {item:'113666',id:0,idName:'群組Ａ'},
+                        {item:'113666',id:0,idName:'群組Ａ'},
+                        {item:'1129',id:0,idName:'群組Ａ'},
+                        {item:'1130',id:0,idName:'群組Ａ'},
+                        {item:'113666',id:0,idName:'群組Ａ'},
+                        {item:'1129',id:0,idName:'群組Ａ'},
+                        {item:'1130',id:0,idName:'群組Ａ'},
+                        {item:'113666',id:0,idName:'群組Ａ'},
+                        {item:'1129',id:0,idName:'群組Ａ'},
+                        {item:'1130',id:0,idName:'群組Ａ'},
+                        {item:'113666',id:0,idName:'群組Ａ'},
+                        {item:'吃了藥所以快睡著的一群人',id:2,idName:'群組ＢＢ'},
+                        {item:'想要準時下班的一群人',id:3,idName:'群組ＣＣ'},
+                        {item:'想要準時下班的一群人',id:3,idName:'群組ＣＣ'},
+                        {item:'想要準時下班的一群人',id:3,idName:'群組ＣＣ'},
+                        {item:'想要準時下班的一群人',id:3,idName:'群組ＣＣ'},
+                        {item:'想要準時下班的一群人',id:3,idName:'群組ＣＣ'},
+                        {item:'想要準時下班的一群人',id:3,idName:'群組ＣＣ'},
+                        {item:'想要準時下班的一群人',id:3,idName:'群組ＣＣ'},
+                        {item:'222423',id:3,idName:'群組ＣＣ'},
+                        {item:'不放人下班的一群人',id:0,idName:'群組Ａ'}]},
+                    {name:'類別BBBBBBBB',small:
+                        [{item:'腦袋不靈光的一群人',id:0,idName:'群組Ａ'},{item:'被拖累得能者們',id:0,idName:'群組Ａ'},{item:'能者過勞',id:0,idName:'群組Ａ'},{item:'不能者振作點好嗎',id:0,idName:'群組Ａ'},{item:'週末上班的一群人',id:3,idName:'群組ＣＣ'},
+                        {item:'在222',id:3,idName:'群組ＣＣ'},
+                        {item:'在222',id:3,idName:'群組ＣＣ'},
+                        {item:'23423',id:3,idName:'群組ＣＣ'},
+                        {item:'在22',id:3,idName:'群組ＣＣ'},
+                        {item:'在222123',id:3,idName:'群組ＣＣ'},
+                        {item:'2222',id:3,idName:'群組ＣＣ'},
+                        {item:'11111',id:3,idName:'群組ＣＣ'},
+                        ]
+                    },
+                    {name:'BBBBBBBB',small:[{item:'腦袋不靈光的一群人',id:0,idName:'群組Ａ'}]},
+                    {name:'BB',small:[{item:'腦袋不靈光的一群人',id:0,idName:'群組Ａ'}]},
+                ]})
+                const theTopTitle=reactive({val:'選擇靜態名單'})
+                const table=reactive({arr:[]})//主要內容            
+                const tableTitle=reactive({arr:[]})////
+                const timeId=reactive({arr:[{nameS:'startTime',nameE:'endTime'},{nameS:'startTimeBe',nameE:'endTimeBe'}]})
+                const dropDownTest=reactive({arr:[{value:0,text:'123'},{value:1,text:'333'},]})
+                const floorData=reactive({arr:[{item:'1樓'},{item:'2樓'},{item:'3樓'},{item:'4樓'},{item:'5樓'},{item:'6樓'},{item:'7樓'},{item:'8樓'},{item:'B1F'},{item:'B2F'},{item:'B3F'},]})
+                const havePushData=reactive({arr:[{item:'母親節發過的名單'},{item:'40歲發過的名單'},{item:'18歲發過的名單'}]})
+                const workData=reactive({arr:[{item:'精品'},{item:'化妝品'},{item:'美食'}]})
+                const blackData=reactive({arr:[{item:'DM行銷名單'},{item:'eDM行銷名單'},{item:'email行銷名單'}]})
+                const dropDownTestList=reactive({arr:[{value:0,text:'已建立靜態名單A'},{value:1,text:'已建立靜態名單B'},{value:2,text:'已建立靜態名單C'},]})
+                const dropDownTestStore=reactive({arr:[{value:0,text:'本館'},{value:1,text:'巨蛋'}]})
+                const dropDownTestItem=reactive({arr:[{value:0,text:'Guggi'},{value:1,text:'Chanel'}]})
+                //沒用在dom上
+                const theDays=reactive({arr:[{name:'~7天前'},{name:'8~14天前'},{name:'15~30天前'},{name:'31~60天前'},{name:'61~90天前'},{name:'91~180天前'},{name:'181~365天前'},{name:'366天前~'},{name:'合計'}]})//hardCode
+                const theNum=reactive({arr:[{name:'1次'},{name:'2次'},{name:'3次'},{name:'4~6次'},{name:'7~12次'},{name:'13~24次'},{name:'25~50次'},{name:'50次以上'},{name:'合計'}]})//hardCode
+                const theCost=reactive({arr:[{name:'300,000元~'},{name:'100,000~299,999元'},{name:'50,000~99,999元'},{name:'10,000~49,999元'},{name:'5,000~9,999元'},{name:'3,000~4,999元'},{name:'1,000~2,999元'},{name:'1~999元'},{name:'合計'}]})
+                const getAllData=reactive({obj:{}})//裝後端資料的
+                const tableLeftFirst=reactive({arr:[]})
+                const tableLeftSec=reactive({arr:[]})
+                const putTableBody=reactive({obj:{}})
+                const theTitle=reactive({arr:[{name:'橫計'},{name:'107年合計(B)金額'},{name:'108年合計(A)金額'},{name:'流失'},{name:'流失率'},{name:'107年合計(B)人數'},{name:'107年最高(B)購買額'}]})//hardCode
+                const theRight=reactive({arr:[{name:'縱計'},{name:'108年合計(A)金額'},{name:'107年合計金額'},{name:'新顧客人數'},{name:'108年合計(A)人數'},{name:'108年最高購買額(A)'},{name:''},{name:''}]})//hardCode
+                const theElse=reactive({arr:[{name:'維持金額增減率'},{name:'維持率(顧客數)'},{name:'新顧客率(顧客數)'},{name:'新顧客消失額'},{name:'消失金額'},]})
+                const sumIdArr=reactive({arr:[]})
+                const left=reactive({arr:[]})
+
+                //===========================
+                //function
+                //===========================
+
+                //多選
+                const inputSave=(val)=>{
+                    console.log(val)
+                    
+                    //還給後端的
+                    if(val.handle){
+                        //先合併陣列
+                        let nArr=JSON.parse(JSON.stringify(val.val.arr));
+                        let con=[]
+                        for(let i in nArr){
+                            for(let x in nArr[i].small){
+                                con=con.concat(nArr[i].small[x].arr)
+                            }
+                            nArr[i].small=con
+                            con=[]
+                        }
+                        //挑出選擇過的
+                        for(let i in nArr){
+                            nArr[i].small=nArr[i].small.filter(e=>e.check)
+                        }
+                        nArr=nArr.filter(e=>e.small.length > 0)
+                        console.log(nArr)
+                    }
+                }
+                //drop
+                const changeHandler=(val)=>{
+                    console.log('here')
+                    console.log(val)
+                }
+                //三位一點
+                const numThree=(val)=>{
+                    return val.toFixed(0).toString().replace(/(\d)(?=(?:\d{3})+$)/g,"$1,");//val.toFixed(0).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                }
+                const tableHead=()=>{
+                    for(let i=0;i<13;i++){
+                        sumIdArr.arr[i]={name:'sumId'+(i+1),click:false}//綜計得id自制13個，前10個為10分位的id
+                    }
+                }
+                const clickTitleItem=(key)=>{
+                    console.log(key)
+                    if(key){
+                        if(key<11){
+                            sumIdArr.arr[key-1].click=(sumIdArr.arr[key-1].click)?false:true
+                            let handleTureFalse=sumIdArr.arr[key-1].click
+                            table.arr=table.arr.map((e,k)=>{
+                                //console.log(e.item)
+                                return{
+                                    ...e,
+                                    item:{can:e.item.can,arr:e.item.arr.map((ee,kk)=>{
+                                        return{
+                                            ...ee,
+                                            check:(kk==key-1&&ee.can && k<10 )?(handleTureFalse)?true:false:ee.check
+                                        }
+                                    })},
+                                }
+                            })
+                        }else if(key==11){
+                            sumIdArr.arr[10].click=(sumIdArr.arr[10].click)?false:true
+                            let handleTureFalse=sumIdArr.arr[10].click
+                            table.arr=table.arr.map((e,k)=>{
+                                return{
+                                    ...e,
+                                    HorizontalTotal:{name:e.HorizontalTotal.name,id:e.HorizontalTotal.id,can:e.HorizontalTotal.can,check:(e.HorizontalTotal.can)?(handleTureFalse)?true:false:e.HorizontalTotal.check}
+                                }
+                            })
+                        }else if(key==14){
+                            sumIdArr.arr[11].click=(sumIdArr.arr[11].click)?false:true
+                            let handleTureFalse=sumIdArr.arr[11].click
+                            table.arr=table.arr.map((e,k)=>{
+                                return{
+                                    ...e,
+                                    Lost:{name:e.Lost.name,id:e.Lost.id,can:e.Lost.can,check:(e.Lost.can)?(handleTureFalse)?true:false:e.Lost.check}
+                                }
+                            })
+                        }else if(key==16){
+                            sumIdArr.arr[12].click=(sumIdArr.arr[12].click)?false:true
+                            let handleTureFalse=sumIdArr.arr[12].click
+                            table.arr=table.arr.map((e,k)=>{
+                                return{
+                                    ...e,
+                                    PeopleTotal_B:{name:e.PeopleTotal_B.name,id:e.PeopleTotal_B.id,can:e.PeopleTotal_B.can,check:(e.PeopleTotal_B.can)?(handleTureFalse)?true:false:e.PeopleTotal_B.check}
+                                }
+                            })
+                        }
+                    }
+            }
+                //點選最左邊
+                const clickLeftItem=(key)=>{
+                    console.log(key)
+
+                    left.arr[key].click=(left.arr[key].click)?false:true
+                    let handleTureFalse=left.arr[key].click
+                    table.arr=table.arr.map((e,k)=>{
+                        return{
+                            ...e,
+                            item:{can:e.item.can,arr:e.item.arr.map((ee,kk)=>{
+                                return{
+                                    ...ee,
+                                    check:(k==key&&ee.can)?(handleTureFalse)?true:false:ee.check
+                                }
+                            })},
+                            HorizontalTotal:{name:e.HorizontalTotal.name,id:e.HorizontalTotal.id,can:e.HorizontalTotal.can,check:false},            
+                            Lost:{name:e.Lost.name,id:e.Lost.id,can:e.Lost.can,check:e.Lost.check}, 
+                            PeopleTotal_B:{name:e.PeopleTotal_B.name,id:e.PeopleTotal_B.id,can:e.PeopleTotal_B.can,check:e.PeopleTotal_B.check}
+                        }
+                    })
+                    
+                }
+
+                const drawTable=()=>{
+                    let theData=getAllData.obj
+                    let putObj={name:'',id:'',check:false}            
+                    table.arr=table.arr.map((e,k)=>{
+                        return{
+                            ...e,
+                            item:{arr:e.item.arr.map((ee,kk)=>{
+                                return{
+                                    name:(theData.RowList[k]!==undefined)?numThree(theData.RowList[k].Data[kk].Value):'',
+                                    id:(theData.RowList[k]!==undefined)?theData.RowList[k].Data[kk].ID:'',
+                                    check:false,
+                                    can:(theData.RowList[k]!==undefined)?true:false
+                                }
+                            }),can:(theData.RowList[k]!==undefined)?true:false},
+                            HorizontalTotal:(theData.RowList[k]!==undefined)?{name:numThree(theData.RowList[k].StatisticData.HorizontalTotal.Value),id:theData.RowList[k].StatisticData.HorizontalTotal.ID,check:false,can:false}:putObj,
+                            AmountTotal_B:(theData.RowList[k]!==undefined)?numThree(theData.RowList[k].StatisticData.AmountTotal_B.Value):'',
+                            AmountTotal_A:(theData.RowList[k]!==undefined)?numThree(theData.RowList[k].StatisticData.AmountTotal_A.Value):'',
+                            Lost:(theData.RowList[k]!==undefined)?{name:numThree(theData.RowList[k].StatisticData.Lost.Value),id:theData.RowList[k].StatisticData.Lost.ID,check:false,can:true}:putObj,
+                            LostRate:(theData.RowList[k]!==undefined)?numThree(theData.RowList[k].StatisticData.LostRate.Value):'',
+                            PeopleTotal_B:(theData.RowList[k]!==undefined)?{name:numThree(theData.RowList[k].StatisticData.PeopleTotal_B.Value),id:theData.RowList[k].StatisticData.PeopleTotal_B.ID,check:false,can:true}:putObj,
+                            PurchaseTotal_B:(theData.RowList[k]!==undefined)?{name:numThree(theData.RowList[k].StatisticData.PurchaseTotal_B.Value),id:'',check:false,can:false}:putObj//這邊是上方購買額，不是人數，不能check
+                        }
+                    })
+                    //else
+                    let rowLength=theData.RowList.length//十分位的數量
+                    //畫面下方右邊另外的資料，順位下去
+                    let rightData=[
+                        {name:numThree(theData.Statistic_right.MaintainAmountRate.Value)},
+                        {name:numThree(theData.Statistic_right.MaintainRate.Value)},
+                        {name:numThree(theData.Statistic_right.NewCustomerRate.Value)},
+                        {name:numThree(theData.Statistic_right.NewCustomerPurchase.Value)},
+                        {name:numThree(theData.Statistic_right.LostAmount.Value)}
+                    ]
+                    let lefts=[]
+                    //根據下方有幾筆資料去塞（右邊的）
+                    for(let i=0;i<rightData.length;i++){
+                        lefts[i]={name:theData.Statistic_left[i+1].Name,
+                            canClick:(i==2||i==3)?true:false,
+                            downItem:theData.Statistic_left[i+1].Data.map((e,k)=>{
+                            return{name:numThree(e.Value),id:e.ID,check:false,can:(i==2||i==3)?true:false}
+                        }),hor:theData.Statistic_left[i+1].HorizontalTotal}
+                    }
+                    
+                    //下方資料塞好塞進table相對應的位子，用後端十分位（目前長度十）＋1當頭計算（縱計排除，在sum區計算），到後端給的“另外資料”長度加總當尾
+                    for(let i=rowLength+1;i<rowLength+rightData.length+1;i++){
+                        //theElse
+                        table.arr[i].AmountTotal_B=theElse.arr[i-rowLength-1].name//右邊的名字是hardcode
+                        table.arr[i].PurchaseTotal_B={name:rightData[i-rowLength-1].name,id:'',check:'',can:true}
+                        table.arr[i].first=lefts[i-rowLength-1].name//左邊後端給的名字
+                        table.arr[i].item.arr=lefts[i-rowLength-1].downItem//左邊後端給的數字
+                        table.arr[i].item.can=(lefts[i-rowLength-1].canClick)?true:false//暫時先hardcode誰不能點
+                        table.arr[i].HorizontalTotal={name:numThree(lefts[i-rowLength-1].hor.Value),id:lefts[i-rowLength-1].hor.ID,check:false,can:false}//左邊後端給的合計
+                    }
+                    //sum
+                    let sum=SumData()
+
+                    //十分加總
+                    table.arr[10].item.arr=table.arr[10].item.arr.map((e,k)=>{
+                        return{name:sum[k].num,id:sumIdArr.arr[k].name,check:false,can:false}
+                    })
+                    
+                    //其他加總
+                    let elseSumArr=theData.RowList.map((e,k)=>{
+                        return{
+                            hor:e.StatisticData.HorizontalTotal.Value,//人數
+                            amB:e.StatisticData.AmountTotal_B.Value,
+                            amA:e.StatisticData.AmountTotal_A.Value,
+                            lost:e.StatisticData.Lost.Value,//人數
+                            lostR:e.StatisticData.LostRate.Value,
+                            peoB:e.StatisticData.PeopleTotal_B.Value,//人數
+                            peoToB:e.StatisticData.PurchaseTotal_B.Value
+                        }
+                    })
+                    
+                    let sumBoxObj={hor:null,amB:null,amA:null,lost:null,lostR:null,peoB:null,peoToB:null}
+                    for(let i=0;i<elseSumArr.length;i++){
+                        sumBoxObj.hor+=elseSumArr[i].hor
+                        table.arr[rowLength].HorizontalTotal ={name:sumBoxObj.hor,id:sumIdArr.arr[10].name,check:false,can:false}
+                        sumBoxObj.amB+=elseSumArr[i].amB
+                        table.arr[rowLength].AmountTotal_B =sumBoxObj.amB
+                        sumBoxObj.amA+=elseSumArr[i].amA
+                        table.arr[rowLength].AmountTotal_A =sumBoxObj.amA
+                        sumBoxObj.lost+=elseSumArr[i].lost
+                        table.arr[rowLength].Lost ={name:sumBoxObj.lost,id:sumIdArr.arr[11].name,check:false,can:true}
+                        sumBoxObj.lostR+=elseSumArr[i].lostR
+                        table.arr[rowLength].LostRate =sumBoxObj.lostR
+                        sumBoxObj.peoB+=elseSumArr[i].peoB
+                        table.arr[rowLength].PeopleTotal_B ={name:sumBoxObj.peoB,id:sumIdArr.arr[12].name,check:false,can:true}
+                        sumBoxObj.peoToB+=elseSumArr[i].peoToB
+                        table.arr[rowLength].PurchaseTotal_B ={name:sumBoxObj.peoToB,id:'',check:false,can:false}
+                    }
+                    
+                    table.arr[10].HorizontalTotal.name=numThree(table.arr[10].HorizontalTotal.name)
+                    table.arr[10].AmountTotal_B=numThree(table.arr[10].AmountTotal_B)
+                    table.arr[10].AmountTotal_A=numThree(table.arr[10].AmountTotal_A)
+                    table.arr[10].Lost.name=numThree(table.arr[10].Lost.name)
+                    table.arr[10].PeopleTotal_B.name=numThree(table.arr[10].PeopleTotal_B.name)
+                    table.arr[10].PurchaseTotal_B.name=numThree(table.arr[10].PurchaseTotal_B.name)
+                    table.arr[10].LostRate=numThree(table.arr[10].LostRate * 0.1) + '%'
+                    //裝左邊
+                    left.arr=table.arr.map((e,k)=>{
+                        return{name:e.first,click:false}
+                    })
+                    //裝最下面
+                    table.arr[table.arr.length-2].Lost={name:'108年單價(A)',can:false,id:''}
+                    table.arr[table.arr.length-1].Lost={name:'107年單價(B)',can:false,id:''}
+                    table.arr[table.arr.length-2].LostRate=theData.Statistic_right.UnitPrice_A.Value
+                    table.arr[table.arr.length-1].LostRate=theData.Statistic_right.UnitPrice_B.Value
+                }
+                const SumData=()=>{
+                    let arr=getAllData.obj.RowList
+                    let newArr=[]
+ 
+                    const theMath=(key,smallKey)=>{
+                        let theSum=0
+                        for (let i = 0; i < arr.length; i++) {
+                            theSum += arr[i].Data[key].Value
+                        };
+                        return numThree(theSum)
+                    }
+                    for(let x=0;x<10;x++){
+                        newArr[x]={num:0}
+                        newArr[x].num=theMath(x)
+                    }
+                    return newArr;
+                }
+                const startDraw=()=>{
+                    //填空的
+                    let titles=[{name:'等級'}]
+                    for(let i=1;i<11;i++){titles[i]={name:i}}
+                    tableTitle.arr=titles.concat(theTitle.arr);//頭
+                    //table
+                    let tables=[]
+                    let item=[]
+                    let firBack=[]
+                    let obj={name:null,id:'',check:false}
+                    //十分位//HorizontalTotal，Lost，PeopleTotal_B，PurchaseTotal_B部分可點擊
+                    for(let i=0;i<10;i++){
+                        item[i]={name:''}
+                        tables[i]={first:i+1,item:{arr:item,can:true},HorizontalTotal:obj,AmountTotal_B:null,AmountTotal_A:null,Lost:obj,LostRate:null,PeopleTotal_B:obj,PurchaseTotal_B:obj}
+                    }
+                    //十分位下方另外的資料
+                    for(let i=0;i<theRight.arr.length;i++){firBack[i]={first:theRight.arr[i].name,item:{arr:item,can:false},HorizontalTotal:obj,AmountTotal_B:null,AmountTotal_A:null,Lost:obj,LostRate:null,PeopleTotal_B:obj,PurchaseTotal_B:obj}}
+                    table.arr=tables.concat(firBack);
+                    
+                    tableHead()
+                }
+                const save=()=>{
+                    console.log(putTableBody)
+                }
+                
+                //++++++++++++++++++++++++++++
+                //一開始跑的
+                //++++++++++++++++++++++++++++
+                onMounted(() => {
+                    getAllData.obj=allData
+                    startDraw()
+                    drawTable()
+                    //tag
+                    for(let i=3;i<100;i++){
+                        let newVal= JSON.parse(JSON.stringify(tagData.arr[0]));
+                        newVal.name=newVal.name+'-'+ String(i)
+                        tagData.arr[i]=newVal
+                    }
+                    tagData.arr.map((e,k)=>{
+                        return{...e,name:e.name+'-'+k}
+                    })
+                });
+
+                
+                //需要再畫面顯示的資料要在這裡回傳
+                return{
+                    title,tagData,theTopTitle,table,timeId,dropDownTest,floorData,havePushData,workData,blackData,
+                    dropDownTestList,dropDownTestStore,dropDownTestItem,
+                    tableTitle,
+                    //function
+                    inputSave,changeHandler,startDraw,save,clickTitleItem,
+                }
+            }
+        });
+
+
+        //component（資料主要分在這）
+        App.component('inputbox',{
+            template:'#inputbox',
+            props:{
+                data:{},
+                title:{},
+                inputSave:{type:Function,default: () => {},}
+            },
+            //傳值更動的地方
+            setup(props) {
+
+                    const handleTag=reactive({val:false})
+                    const handleTagVal=reactive({val:''})
+                    const text=reactive({val:''})
+                    const textTmp=reactive({val:''})
+                    const optionsShown=reactive({val:false})
+                    const getData=reactive([{item:'',check:false}])
+                    const getDataTmp=reactive([{item:'',check:false}])
+                    const anothergetData=reactive({arr:[{name:'',show:true,small:[{item:'',idName:'',check:false}]}]})
+                    const anothergetDataTmp=reactive({arr:[]})
+                    const keyWord=reactive({val:''})
+                    const dropDownTest=reactive({arr:[{value:0,text:'類別'},{value:1,text:'群組'},{value:2,text:'標籤'}]})
+                    const searchType=reactive({val:2})
+                    const first=reactive({val:true})//判定第一次打開
+                    const navTitle=reactive({arr:[{name:'選擇標籤',val:0},{name:'已選擇標籤',val:1}]})
+                    const navNumber=reactive({val:0})
+                    const navNumberTmp=reactive({val:0})
+                    const confrimText=reactive({obj:{left:'',right:'',spec:'',theLast:'',tagName:''}})
+                    const openConfirm=reactive({val:false})//確定刪除嗎的pop
+                    const clickDel=reactive({val:false})//確定刪除pop的確認或取消
+                    const nowClickWhichDel=reactive({val:null})//按下確認刪除後要拿這個知道要執行哪個map
+                    const nowClickWhichDelVal=reactive({obj:{}})
+                    const dontWantToCheckDel=reactive({val:false})//給使用者選擇要不要確認刪除動作
+                    const nowScrollTop=reactive({val:0})
+                    const timer=reactive({val:null})
+                    const itemTag=ref(null) //vue2$ref移除
+                    const tagNum=reactive({val:0})
+
+                    //watch
+                    watch(optionsShown,(val)=>{//普通用法
+                        if(handleTag.val && !val){
+                            nowScrollTop.val=0
+                            clearTimeout(timer.val)
+                        }
+                    })
+
+                    //===================
+                    //function
+                    //===================
+                    const drop=(val)=>{
+                        searchType.val=val.value
+                    }
+
+                    const clickNav=(val)=>{
+                        navNumber.val=val.val
+                        keyWord.val=''
+                        searchIt('標籤')
+                    }
+                    //算有幾個標籤
+                    const tagNumComputed=(bigKey,smallKey)=>{
+                        let allNum=0
+                        for(let i in anothergetData.arr){                         
+                            for(let x in anothergetData.arr[i].small){
+                                let filterTheSmall=anothergetData.arr[i].small[x].arr.filter(e=>e.check)
+                                let num=filterTheSmall.length
+                                allNum+=num
+                            }    
+                        }   
+                        tagNum.val=allNum
+                    }
+                    
+                    const setCookie=(cname, cvalue, exdays)=> {
+                        let d = new Date();
+                        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                        let expires = "expires="+d.toUTCString();
+                        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                    }
+
+                    const getCookie=(cname)=> {
+                        let name = cname + "=";
+                        let ca = document.cookie.split(';');
+                        for(let i = 0; i < ca.length; i++) {
+                            let c = ca[i];
+                            while (c.charAt(0) == ' ') {
+                            c = c.substring(1);
+                            }
+                            if (c.indexOf(name) == 0) {
+                            return c.substring(name.length, c.length);
+                            }
+                        }
+                        return "";
+                    }
+                    const handleStartVal=()=>{
+                        let cleanAlertCookie=localStorage.getItem("cleanAlertCookie");
+                        if(props.title =='標籤'){
+                            handleTag.val=true
+                            handleTagVal.val='Tag'
+                            if(cleanAlertCookie!==undefined){
+                                dontWantToCheckDel.val=cleanAlertCookie
+                            }else{
+                                //this.$cookies.set('cleanAlertCookie',dontWantToCheckDel.val )
+                                localStorage.setItem("cleanAlertCookie",dontWantToCheckDel.val);
+                            }
+                        }else{
+                            handleTag.val=false
+                        }
+                    }
+                    //filter
+                    const filterIt=(arr,type, searchKey)=>{
+                        return arr.filter(function(obj){ 
+                            return obj.cat.includes(searchKey)
+                        });
+                    }
+
+                    const start=(val)=>{
+                        
+                        if(!handleTag.val){
+                            getData.arr=val.map((e,k)=>{
+                                return{...e,check:false,show:true}
+                            })
+                        }
+                        else{
+                            anothergetData.arr=val.map((e,k)=>{
+                                let newGroup=doSmallGroup(e.small)
+                                return{
+                                    ...e,
+                                    show:true,
+                                    check:false,
+                                    num:newGroup.length,//有幾個
+                                    nowNum:0,
+                                    small:newGroup.map((ee,kk)=>{
+                                        return{
+                                            ...ee,
+                                            arr:ee.arr.map((eee,kkk)=>{return{...eee,check:false,show:true}}),
+                                            num:ee.arr.length,//有幾個
+                                            nowNum:0,
+                                            check:false,
+                                            show:true
+                                        }
+                                    })
+                                }
+                            })
+                            console.log(anothergetData)
+                        }
+                    }
+                    //filter
+                    const searchIt=(val)=> {
+                        if(val!=='標籤'){
+                            getData.arr=getData.arr.map((e,k)=>{
+                                return{
+                                    ...e,
+                                    show:(e.item.indexOf(keyWord.val)!==-1)?true:false
+                                }
+                            })
+                        }else{
+                            if(searchType.val==0){
+                                anothergetData.arr=anothergetData.arr.map((e,k)=>{
+                                    let handle=(e.name.includes(keyWord.val))?true:false
+                                    return{
+                                        ...e,
+                                        show:handle,
+                                        small:e.small.map((ee,kk)=>{
+                                            return{
+                                                ...ee,
+                                                show:handle,
+                                                arr:ee.arr.map((eee)=>{
+                                                    return{...eee,show:handle}
+                                                })
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                            else if(searchType.val==1){
+                                anothergetData.arr=anothergetData.arr.map((e,k)=>{  
+                                    let handleVal=e.small.map((ee,kk)=>{
+                                        let handle=(ee.name.includes(keyWord.val))?true:false
+                                        return{
+                                            ...ee,
+                                            show:handle,
+                                            arr:ee.arr.map((eee)=>{
+                                                return{...eee,show:handle}
+                                            })
+                                        }
+                                    })
+                                    return{
+                                        ...e,
+                                        show:handleVal.some(x => x.show),
+                                        small:handleVal
+                                    }
+                                })
+                            }
+                            else{
+                                anothergetData.arr=anothergetData.arr.map((e,k)=>{
+                                    let handleVal=e.small.map((ee,kk)=>{
+                                        let smallHandleVal=ee.arr.map((eee)=>{
+                                            return{...eee,show:(eee.item.includes(keyWord.val))?true:false}
+                                        })
+                                        return{
+                                            ...ee,
+                                            show:smallHandleVal.some(x => x.show),
+                                            arr:smallHandleVal
+                                        }
+                                    })
+                                    return{
+                                        ...e,
+                                        show:handleVal.some(x => x.show),
+                                        small:handleVal
+                                    }
+                                })
+                            }
+
+                            $('.item-box').animate({ scrollTop: 0 }, "fast");
+                            nextTick(()=>{
+                                nowScrollTop.val=0
+                                getTheHeight()
+                            }) 
+                            
+                        }      
+                    }
+                    //大類別進去分裝小的
+                    const doSmallGroup=(group)=>{
+                        //先排好順序
+                        let sortGroup=group.sort(function(a, b) {
+                            return (a.id === b.id)? 0 : a.id? 1 : -1;
+                        });
+                        //分裝小包
+                        let smallGroup=[] //分裝小包的盒子
+                        let newGroup=[] //要裝小包的的盒子
+                        
+                        //做事
+                        for(let i=0;i<sortGroup.length;i++){
+                            let tmpid=(i>0)?sortGroup[i-1].id:sortGroup[i].id //上一個ＩＤ
+
+                            if(sortGroup[i].id===tmpid){ //當前id和上一個id一樣
+                                smallGroup.push(sortGroup[i])
+                                
+                                //最後一個如果id還是一樣要記得塞進去
+                                if(i==sortGroup.length-1){
+                                    newGroup.push({name:smallGroup[0].idName,arr:smallGroup,id:smallGroup[0].id})
+                                }
+                            }else{
+                                //不一樣要把剛剛的小包盒子裝進去，清空從頭開始裝小的
+                                newGroup.push({name:smallGroup[0].idName,arr:smallGroup,id:smallGroup[0].id})
+                                smallGroup=[]
+                                smallGroup.push(sortGroup[i])
+                                //最後一個如果和上一個id不一樣，要把這個單獨在塞進去大盒子
+                                if(i==sortGroup.length-1){
+                                    newGroup.push({name:smallGroup[0].idName,arr:smallGroup,id:smallGroup[0].id})
+                                }
+                            }
+                        }
+                        return newGroup
+                    }
+        
+                    //點擊input的反應
+                    const showOptions=()=> {
+                        keyWord.val=''
+                        navNumber.val=0
+                        if(!handleTag.val){
+                            getData.arr=getData.arr.map((e,k)=>{return{...e,show:true}})
+                            getData.arr.sort(function(a, b) {
+                                return (a.check === b.check)? 0 : a.check? -1 : 1;
+                            });
+                            getDataTmp.arr=JSON.parse(JSON.stringify(getData.arr))
+                        }else{
+                            if(first.val){
+                                start(props.data)
+                            }
+                            nextTick(()=>{
+                                getTheHeight()
+                            })
+                            anothergetDataTmp.arr=JSON.parse(JSON.stringify(anothergetData.arr))
+                            tagNumComputed()
+                        }
+                        optionsShown.val = true//show下拉
+                        textTmp.val=text.val
+                        text.val=''
+                    }
+                    //點選類別（避免用watch太吃效能）
+                    const clickAll=(key,handle)=>{
+                        if(handle){
+                            clickAllMap({key,handle})
+                        }else{
+                            if(dontWantToCheckDel.val){
+                                clickAllMap({key,handle})
+                            }else{
+                                confrimText.obj={
+                                    left:'確定刪除',
+                                    right:'這個類別的',
+                                    spec:'標籤嗎？',
+                                    tagName:'『'+anothergetData.arr[key].name+'』',
+                                }
+                                
+                                openConfirm.val=true                               
+                                nowClickWhichDel.val=0
+                                nowClickWhichDelVal.obj={key,handle}
+                            }
+                        }
+                    }
+
+                    const clickAllMap=(val)=>{
+                        const{key,handle}=val
+
+                        let arr=anothergetData.arr[key]
+                        //handle是在已選擇會出現的
+                        //如果是在已選擇的地方選擇要先記下原本群組是否有被勾選
+                        let tmpCheck=(!handle)? anothergetData.arr[key].check : null
+                        anothergetData.arr[key].check=( (handle && arr.check ) || !handle )? false:true
+
+                        if(arr.check){
+                            anothergetData.arr[key].nowNum=arr.small.length
+                            anothergetData.arr[key].small=arr.small.map(e=>{
+                                return{
+                                    ...e,check:true,nowNum:e.arr.length,
+                                    arr:e.arr.map(ee=>{
+                                        return{...ee,check:true}
+                                    })
+                                }
+                            })
+            
+                        }else{    
+                            anothergetData.arr[key].nowNum=0                             
+                            anothergetData.arr[key].small=arr.small.map(e=>{
+                                return{
+                                    ...e,check:false,nowNum:0,
+                                    arr:e.arr.map(ee=>{
+                                        return{...ee,check:false}
+                                    })
+                                }
+                            })
+                        }
+                        tagNumComputed()
+                    }
+                    
+                    //點選小群組 （避免用watch太吃效能）
+                    const clickGroup=(key,smallKey,handle)=>{
+                        if(handle){
+                            clickGroupMap({key,smallKey,handle})
+                        }else{
+                            if(dontWantToCheckDel.val){
+                                clickGroupMap({key,smallKey,handle})
+                            }else{
+                                confrimText.obj={
+                                    left:'確定刪除',
+                                    right:'這個群組內',
+                                    spec:'標籤嗎？',
+                                    tagName:'『'+anothergetData.arr[key].small[smallKey].name+'』',
+                                }
+                                openConfirm.val=true
+                                nowClickWhichDel.val=1
+                                nowClickWhichDelVal.obj={key,smallKey,handle}
+                            }
+                        }
+                    }
+
+                    const clickGroupMap=(val)=>{
+                        const{key,smallKey,handle}=val
+                        let small=anothergetData.arr[key].small[smallKey]
+                        let arr=anothergetData.arr[key]
+                        //handle是在已選擇會出現的
+                        //如果是在已選擇的地方選擇要先記下原本群組是否有被勾選
+                        let tmpCheck=(!handle)? small.check : null
+                        anothergetData.arr[key].small[smallKey].check=( (handle && small.check ) || !handle )? false:true
+
+
+                        if(small.check){
+                            
+                            anothergetData.arr[key].small[smallKey].arr=small.arr.map(e=>{
+                                return{...e,check:true}
+                            })
+
+                            anothergetData.arr[key].small[smallKey].nowNum=small.arr.length
+                            anothergetData.arr[key].nowNum++
+                            
+                            //看全部群組選滿了沒
+                            if(arr.nowNum==arr.num){
+                                anothergetData.arr[key].check=true 
+                            }
+                        }else{
+                            //如果小群組，類別直接--，但在已選擇的時候，要看小群組的nowNum是否跟num一樣多
+                            if(tmpCheck==null && (tmpCheck!==null && small.nowNum == small.num )){
+                                anothergetData.arr[key].nowNum--
+                            }
+
+                            //不管選了幾個，現在選擇裡面有的都要歸零
+                            if(tmpCheck==null||tmpCheck!==null){
+                                anothergetData.arr[key].small[smallKey].nowNum=0
+                            }
+                            
+                            anothergetData.arr[key].small[smallKey].arr=small.arr.map(e=>{
+                                return{...e,check:false}
+                            })
+                            //如果本來類別有勾選
+                            if(arr.check){
+                                anothergetData.arr[key].check=(arr.check)?false:true
+                            }
+                        }
+                        tagNumComputed()
+                    }
+
+                    //選擇標籤
+                    const smallTagClick=(key,smallKey,smallsmallKey,handle)=>{
+                        if(handle){
+                            smallTagClickMap({key,smallKey,smallsmallKey,handle})
+                        }else{
+                            if(dontWantToCheckDel.val){
+                                smallTagClickMap({key,smallKey,smallsmallKey,handle})
+                            }else{
+                                confrimText.obj={
+                                    left:'確定刪除所選取的',
+                                    right:'這個標籤嗎？',
+                                    spec:'',
+                                    tagName:'『'+anothergetData.arr[key].small[smallKey].arr[smallsmallKey].item +'』',
+                                }
+                                
+                                openConfirm.val=true
+                                nowClickWhichDel.val=2
+                                nowClickWhichDelVal.obj={key,smallKey,smallsmallKey,handle}
+                            }
+                        }
+                    }
+
+                    const smallTagClickMap=(val)=>{
+                        const{key,smallKey,smallsmallKey,handle}=val
+                        
+                        let chose=anothergetData.arr[key].small[smallKey].arr[smallsmallKey]
+                        let small=anothergetData.arr[key].small[smallKey]
+                        let arr=anothergetData.arr[key]
+                        //handle是在已選擇會出現的
+                        anothergetData.arr[key].small[smallKey].arr[smallsmallKey].check=( (handle && chose.check ) || !handle )? false:true
+                        
+                        if(chose.check){
+                            anothergetData.arr[key].small[smallKey].nowNum++
+                            //看群組選滿了沒
+                            if(small.nowNum==small.num){
+                                anothergetData.arr[key].small[smallKey].check=true
+                                anothergetData.arr[key].nowNum++
+                                if(arr.nowNum==arr.num){
+                                    anothergetData.arr[key].check=true
+                                }
+                            }
+                        }
+                        //這邊else本來不跑!handle的值
+                        else{
+
+                            anothergetData.arr[key].small[smallKey].nowNum--
+
+                            //如果本來群組有勾選，或是在已選擇的時候，群組有勾選
+                            if(small.check || (!handle && small.check)){
+                                anothergetData.arr[key].small[smallKey].check=false
+                                anothergetData.arr[key].nowNum--
+                                anothergetData.arr[key].check=false
+                            }    
+                        }
+                        tagNumComputed()
+                    }
+
+                    //確認刪除
+                    const checkDel=(val)=>{
+                        if(val){
+                            if(nowClickWhichDel.val==0){
+                                clickAllMap(nowClickWhichDelVal.obj)
+                                openConfirm.val=false
+                                mapHeightSum()
+                            }
+                            else if(nowClickWhichDel.val==1){
+                                clickGroupMap(nowClickWhichDelVal.obj)
+                                openConfirm.val=false
+                                mapHeightSum()
+                            }
+                            else if(nowClickWhichDel.val==2){
+                                smallTagClickMap(nowClickWhichDelVal.obj)
+                                openConfirm.val=false
+                                mapHeightSum()
+                            }
+                            else{
+                                cleanTableCheck()
+                                openConfirm.val=false
+                            }
+                        }else{
+                            openConfirm.val=false
+                        }
+                    }
+
+                    //是否要確認刪除這個動作
+                    const dontWantToCheckDelHandle=()=>{
+                        dontWantToCheckDel.val=dontWantToCheckDel.val?false:true
+                        //this.$cookies.set('cleanAlertCookie',dontWantToCheckDel.val )
+                        localStorage.setItem("cleanAlertCookie",dontWantToCheckDel.val);
+                    }
+
+                    //計算高度
+                    const mapHeightSum=()=>{
+                        
+                        if(itemTag){
+                            
+                            let val=itemTag.value.childNodes //變這樣會有第一個和最後一個都變text的問題
+                            
+                            anothergetData.arr=anothergetData.arr.map((e,k)=>{
+                                let theHeight=val[k+1].offsetTop + 150 //當前高度 （＋數字是為了晚點變absolute）
+                                let i=1//因為不能從第零個開始（text），並且要從下一個開始找
+                                let nextTheHeight=''
+                                //刪除會有show hide問題，沒有的高度會被算進去，所以要從下一個打開的show去找
+                                const watchMapBigShow=()=>{
+                                    if(val[k+i+1] && anothergetData.arr[k+i] && anothergetData.arr[k+i].show){//下一個如果不是undefined
+                                                                    
+                                        if(anothergetData.arr[k+i].show){//如果下一個有開，就填入，沒有就繼續
+                                            nextTheHeight=val[k+i+1].offsetTop +50 //+數字是為了晚點脫離最上層
+                                        }else{
+                                            i++
+                                            watchMapBigShow()
+                                        }   
+
+                                    }else{
+                                        nextTheHeight=itemTag.value.scrollHeight
+                                    }
+                                }
+
+                                watchMapBigShow()
+                                return{
+                                    ...e,
+                                    height:theHeight,
+                                    nextHeight:nextTheHeight,
+                                    small:e.small.map((ee,kk)=>{
+                                        //let val=itemTag.value.childNodes[k]
+                                        //因為前面兩個不是群組（title,text），第一個高度不能算//當前高度
+                                        let y=(navNumber.val==1)?3:2
+                                        let top=val[k+1].childNodes[kk+y].offsetTop + 100  //+這個會晚點變absolute
+                                        let i=(navNumber.val==1)?4:3
+                                        let x=1
+                                        let nextTop=''
+                                        //刪除會有show hide問題，沒有的高度會被算進去，所以要從下一個打開的show去找
+                                        const watchMapShow=()=>{
+                                            if(val[k+1].childNodes[kk+i] && e.small[kk+x]){//下一個如果不是undefined                        
+                                                if(val[k+1].childNodes[kk+i].style.display){//如果下一個有開，就填入，沒有就繼續
+                                                    nextTop=val[k+1].childNodes[kk+i].offsetTop + 60 //+這個會晚點變回relative
+                                                }else{
+                                                    i++
+                                                    x++
+                                                    watchMapShow()
+                                                }   
+                
+                                            }else{
+                                                nextTop= nextTheHeight + 30
+                                            }
+                                        }
+
+                                        watchMapShow()
+                                        return{
+                                            ...ee,
+                                            height:(top < theHeight )?theHeight:top,
+                                            nextHeight:(nextTop > nextTheHeight )?nextTheHeight:nextTop,
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                        console.log(anothergetData)
+                    }
+
+                    //監聽滾輪高度
+                    const getTheHeight=()=>{
+                        let i=0
+                        const call=()=>{
+                            nextTick(()=>{
+                                mapHeightSum()
+                                itemTag.value.addEventListener('scroll', () => {
+                                    if(optionsShown.val){
+                                        nowScrollTop.val=(itemTag.value.scrollTop==0)? 0 : itemTag.value.scrollTop + 300//+300卷到底才會是整個高
+
+                                    }else{
+                                        nowScrollTop.val=0
+                                        clearTimeout(timer.val);
+                                        console.log('clear')
+                                    }
+                                    //console.log(nowScrollTop.val)
+                                }, false)
+                            });
+                        }
+                        //因為v-if跑很慢
+                        timer.val=setTimeout(call, 0)
+                    }
+
+                    //把勾選全清除
+                    const cleanTableHandle=()=>{
+                        confrimText.obj={
+                            left:'確定刪除',
+                            right:'嗎？',
+                            spec:'',
+                            tagName:'『所有選取的標籤』',
+                        }
+                        openConfirm.val=true
+                        nowClickWhichDel.val='all'
+                    }
+
+                    const cleanTableCheck=()=>{
+                        anothergetData.arr=anothergetData.arr.map(e=>{
+                            return{...e,check:false,small:e.small.map(ee=>{
+                                return{...ee,check:false,arr:ee.arr.map(eee=>{
+                                    return{...eee,check:false}
+                                })}
+                            })}
+                        })
+                    }
+
+                    const exit=()=> {
+                        text.val=textTmp.val
+                        if(handleTag.val){
+                            anothergetData.arr=JSON.parse(JSON.stringify(anothergetDataTmp.arr))
+                        }
+                        else if(!handleTag.val){
+                            getData.arr=JSON.parse(JSON.stringify(getDataTmp.arr))
+                        }
+                        $('.item-box').animate({ scrollTop: 0 }, "fast");
+                        nextTick(()=>{
+                            optionsShown.val = false//show下拉
+                        }) 
+                    }
+
+                    const back=()=>{
+                        exit()
+                    }
+
+                    const save=()=>{
+                        console.log('save')
+                        
+                        if(handleTag.val){
+                            for(let i=0;i<anothergetData.arr.length;i++){
+                                for(let ii=0;ii<anothergetData.arr[i].small.length;ii++){
+                                    for(let iii=0;iii<anothergetData.arr[i].small[ii].arr.length;iii++){
+                                        let data=anothergetData.arr[i].small[ii].arr[iii].check
+                                        text.val+=(data)?anothergetData.arr[i].small[ii].arr[iii].item+'+':''
+                                    }
+                                }
+                            }
+                            props.inputSave({handle:handleTag.val,val:anothergetData})
+                        }else{
+                            for(let i=0;i<getData.arr.length;i++){
+                                if(getData.arr[i]){
+                                    let data=getData.arr[i].check
+                                    text.val+=(data)?getData.arr[i].item+'+':''
+                                }
+                            }
+                            props.inputSave({handle:handleTag.val,val:getData})
+                        }
+                        text.val=text.val.substring(0,text.val.length-1);
+                        
+                        $('.item-box').animate({ scrollTop: 0 }, "fast");
+                        nextTick(()=>{
+                            optionsShown.val = false//show下拉
+                        }) 
+                        first.val=false
+                    }
+                    
+                    //++++++++++++++++++++++++++++
+                    //一開始跑的
+                    //++++++++++++++++++++++++++++
+                    onMounted(() => {
+                        handleStartVal()
+                        start(props.data)
+                        
+                    });
+
+                //props也要回傳回來
+                return{
+                    props,handleTag,handleTagVal,text,optionsShown,getData,anothergetData,navNumber,
+                    keyWord,dropDownTest,navTitle,openConfirm ,clickDel,nowClickWhichDel,nowClickWhichDelVal,
+                    dontWantToCheckDel,nowScrollTop,itemTag,confrimText,tagNum,
+                    //function
+                    clickNav,filterIt,showOptions,clickAll,clickGroup,smallTagClick,searchIt,
+                    checkDel,dontWantToCheckDelHandle,cleanTableHandle,cleanTableCheck,
+                    exit,back,save,drop
+                }
+            }
+        })
+
+        App.component('dropdownbox',{
+            template:'#dropdownbox',
+            props:{
+                data:{},
+                title:{},
+                changehandler:{type:Function}
+            },
+            //傳值更動的地方
+            setup(props) {
+                const text=reactive({val:''})
+                const optionsShown=reactive({val:false})
+
+                //點擊input的反應
+                const showOptions=()=> {
+                    optionsShown.val = true//show下拉
+                }
+                const exit=()=> {
+                    optionsShown.val = false//show下拉
+                }
+                const drop=(val)=>{
+                    text.val=val.text
+                    props.changehandler(val)
+                }
+                //++++++++++++++++++++++++++++
+                //一開始跑的
+                //++++++++++++++++++++++++++++
+                onMounted(() => {
+                    text.val=(!props.title)?props.data[2].text:''
+                })
+
+                return{
+                    props,text,optionsShown,
+                    showOptions,exit,drop
+                }
+            }
+        })
+
+        //time
+        App.component("timebox", {
+            template:'#timebox',
+            props: {
+                title:{},
+                ids:{},
+            },
+            setup(props){
+                const startTime=reactive({val:''})
+                const endTime=reactive({val:''})
+
+                const start=()=>{
+                    
+                    $('#'+props.ids.nameS).datetimepicker({ 
+                        pickTime: false, 
+                        format: "YYYY/MM/DD", 
+                        useCurrent: false
+                    }).on("dp.change", function (e) {
+                        startTime.val = $('#'+props.ids.nameS).val()
+                        $('#'+props.ids.nameE).data("DateTimePicker").setMinDate(e.date);
+                        
+                    });
+                    //
+                    $('#'+props.ids.nameE).datetimepicker({ 
+                        pickTime: false, 
+                        format: "YYYY/MM/DD", 
+                        defaultDate:'',
+                        useCurrent: false
+                    }).on("dp.change", function (e) {
+                        endTime.val = $('#'+props.ids.nameS).val()
+                        $('#'+props.ids.nameS).data("DateTimePicker").setMaxDate(e.date);
+                    });
+                }
+                const clean=()=>{
+                    startTime.val=''
+                    endTime.val=''
+                }
+                onMounted(() => {
+                    start()
+                })
+                return{
+                    props,clean,startTime,endTime
+                }
+            }
+        })
+        App.mount('#activityitemapp')//mount在app中，只有在app中的標籤才可被操作
+        
+        
+</script>
+</body></html>
